@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><title>六人好友局</title><link rel="stylesheet" href="/style.css"><script defer src="/presentation.js"></script><script defer src="/connection.js"></script><script defer src="/client.js"></script></head>
+<body><main>
+<header class="masthead"><a class="wordmark" href="/">六人好友局<span>SIX VOICES</span></a><span id="connection-status" class="connection">尚未连接</span></header>
+<div class="dev-banner">本地开发联调 · 六个独立标签代表六位玩家 · 不传输真实语音</div>
+<section id="entry" class="entry">
+<div class="intro"><div class="eyebrow">朋友 · 语音 · 一点疑心</div><h1>朋友到齐，<br>猜一局。</h1><p>两名狼人，一位预言家，三位村民。<br>从一句「我觉得」开始。</p><div class="intro-rule"><span class="moon" aria-hidden="true">◐</span><p>首夜不袭击。<br><small>每个人，都有第一轮表达的机会。</small></p></div></div>
+<form id="entry-form" class="entry-panel"><div class="eyebrow">在这里会合</div><label for="nickname">朋友怎么称呼你</label><input id="nickname" name="nickname" maxlength="24" placeholder="输入昵称" autocomplete="nickname" required><button id="create-room" class="primary" type="submit">创建六人好友房 <span aria-hidden="true">↗</span></button><div class="or"><span></span>已有朋友在等你<span></span></div><label for="room-code">六位房间号</label><input id="room-code" name="room-code" maxlength="6" inputmode="numeric" pattern="[0-9]{6}" placeholder="例如 123456"><button id="join-room" type="button">进入朋友的房间</button><p class="helper">先创建房间，再将房间号或邀请链接发给其他五位。每个标签拥有独立身份。</p></form>
+</section>
+<section id="game-screen" class="game-layout" hidden>
+<div class="play-area"><div class="room-top"><div><div class="eyebrow">好友房 <span id="code-display"></span></div><h1 id="phase-title"></h1></div><div id="timer" class="timer"></div></div><p id="instruction" class="instruction"></p><div id="pause" class="pause" hidden></div><div id="seats" class="seats"></div><div id="room-count" class="room-count"></div><div class="voice-line"><span class="voice-icon" aria-hidden="true">◉</span><div><strong id="voice-text"></strong><p id="voice-permission"></p></div></div><div id="actions" class="actions"></div><p id="my-vote" class="helper"></p></div>
+<aside class="side-panel"><section id="identity-panel" hidden><div class="eyebrow">仅你可见</div><h2 id="identity"></h2><p id="goal"></p><div id="private-notes" class="private-notes"></div></section><section class="room-tools"><h2>朋友还在这里</h2><p class="helper">结算后原房再开。六人各自准备，房主手动开始。</p><button id="copy-invite" type="button">复制房间邀请</button><button id="new-player" type="button">用新标签加入一位测试玩家</button><button id="leave-room" class="quiet" type="button">离开房间</button></section><details id="records"><summary>公开事件与票型</summary><div id="history"></div></details><details><summary>随时查看规则</summary><p class="rules">首夜只查验不袭击。白天依次发言、自由讨论、隐藏投票，截止后公开票型。平票最多加投一次，再平则无人出局。出局不公开身份。只有白天放逐者在非终局时有遗言。两狼全部出局好人胜，狼人数达到好人数狼人胜。允许弃票，不能投自己。狼人目标不一致则不袭击。</p></details></aside>
+</section>
+<p id="message" class="message" role="status" hidden></p>
+<footer><span>为朋友之间的判断，留一点空间。</span><span>开发联调 · 无录音 · 无自动推理</span></footer>
+</main></body></html>

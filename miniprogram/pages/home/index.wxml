@@ -1,0 +1,19 @@
+<view class="page">
+  <view wx:if="{{development}}" class="dev-banner">开发联调版本 · 不传输真实语音</view>
+  <view class="eyebrow">六人 · 好友 · 语音推理</view>
+  <view class="title">朋友到齐，<br/>猜一局。</view>
+  <view class="subtitle">两名狼人，一位预言家，三位村民。<br/>从一句「我觉得」开始。</view>
+  <view class="panel section">
+    <view class="label">朋友怎么称呼你</view>
+    <input class="input" value="{{name}}" maxlength="24" placeholder="输入昵称" bindinput="nameInput" disabled="{{busy}}"/>
+    <button class="primary section" data-mode="create" bindtap="enter" loading="{{busy}}" disabled="{{busy}}">创建六人好友房</button>
+    <view class="divider"></view>
+    <view class="label">已有朋友在等你</view>
+    <input class="input" type="number" value="{{code}}" maxlength="6" placeholder="六位房间号" bindinput="codeInput" disabled="{{busy}}"/>
+    <button class="section" data-mode="join" bindtap="enter" disabled="{{busy}}">进入朋友的房间</button>
+    <view wx:if="{{error}}" class="error" role="alert">{{error}}</view>
+  </view>
+  <view class="notice section">首夜不袭击，每个人都能参与第一轮。系统主持，按阶段提示。</view>
+  <button class="link-button section" bindtap="toggleRules">{{rulesOpen ? '收起规则' : '第一次玩？看一眼规则'}}</button>
+  <view wx:if="{{rulesOpen}}" class="panel rules">狼人隐藏身份，夜晚和队友商量袭击。预言家每夜查验一人。村民通过发言和投票找狼。\n白天依次发言、自由讨论、投票；平票最多追加一次。投票结果公开，出局身份隐藏。\n两狼全部出局，好人获胜；狼人数达到好人数，狼人获胜。一次误投可能失败，结束后可以直接再来。</view>
+</view>

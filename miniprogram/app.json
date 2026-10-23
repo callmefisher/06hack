@@ -1,0 +1,6 @@
+{
+  "pages": ["pages/home/index", "pages/room/index"],
+  "window": { "navigationBarTitleText": "六人好友局", "navigationBarBackgroundColor": "#eef2f6", "navigationBarTextStyle": "black", "backgroundColor": "#eef2f6" },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

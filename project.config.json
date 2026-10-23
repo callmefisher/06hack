@@ -1,0 +1,9 @@
+{
+  "miniprogramRoot": "miniprogram/",
+  "projectname": "six-voices-werewolf",
+  "description": "六人好友狼人杀",
+  "appid": "touristappid",
+  "compileType": "miniprogram",
+  "libVersion": "3.8.0",
+  "setting": { "es6": true, "enhance": true, "minified": true, "urlCheck": true }
+}

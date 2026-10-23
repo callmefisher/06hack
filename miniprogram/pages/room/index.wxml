@@ -1,0 +1,27 @@
+<view class="page">
+  <view wx:if="{{status !== 'connected'}}" class="error">{{status === 'expired' ? '登录失效，或已在另一设备进入。' : '正在连接，恢复后可继续操作。'}}<button wx:if="{{status === 'expired'}}" bindtap="relogin">重新进入</button></view>
+  <block wx:if="{{vm}}">
+    <view wx:if="{{vm.devMode}}" class="dev-banner">开发联调 · 不传输真实语音</view>
+    <view class="room-heading"><view class="eyebrow">好友房 {{vm.code}}</view><button open-type="share" class="share">邀请朋友</button></view>
+    <view class="phase-heading"><view><view wx:if="{{vm.day}}" class="small">第 {{vm.day}} 天</view><view class="room-title">{{vm.phaseTitle}}</view></view><view wx:if="{{!vm.waiting}}" class="clock">{{vm.seconds}}<text>秒</text></view></view>
+    <view class="subtitle">{{vm.instruction}}</view>
+    <view wx:if="{{vm.paused}}" class="error">等待朋友重连 · 本局剩余等待 {{vm.pauseSeconds}} 秒<br/>阶段计时与操作已暂停。</view>
+    <view class="seats section">
+      <view wx:for="{{vm.players}}" wx:key="id" class="seat {{item.empty ? 'empty' : ''}} {{item.selectable ? 'selectable' : ''}} {{selected === item.id ? 'selected' : ''}} {{item.speaking ? 'speaking' : ''}} {{!item.alive && !item.empty ? 'out' : ''}}" data-id="{{item.id}}" bindtap="select">
+        <view class="avatar">{{item.empty ? '+' : item.seat}}</view><view class="seat-name">{{item.name}}{{item.isMe ? ' · 你' : ''}}</view><view class="seat-status">{{item.role || item.status}}</view><view wx:if="{{item.speaking}}" class="small">正在发言</view>
+      </view>
+    </view>
+    <view wx:if="{{vm.waiting}}" class="small">{{vm.count}} / 6 人已到 · {{vm.readyCount}} 人已准备</view>
+    <view class="panel section voice-panel"><view class="section-title">{{vm.voiceText}}</view><view class="small">{{vm.waiting ? '开局前自由交流' : vm.voicePermission}}</view><button wx:if="{{vm.waiting && !vm.voiceReady}}" class="section" bindtap="voice" disabled="{{busy || status !== 'connected'}}">{{vm.devMode ? '确认仅做规则联调' : '查看语音接入状态'}}</button></view>
+    <view wx:if="{{vm.identity}}" class="identity section"><view class="label">仅你可见</view><view class="section-title">你是{{vm.identity}}</view><view>{{vm.goal}}</view><view wx:for="{{vm.privateNotes}}" wx:key="*this" class="private-note">{{item}}</view></view>
+    <view wx:if="{{vm.waiting}}" class="section"><button class="primary" bindtap="ready" disabled="{{!vm.canReady || busy || status !== 'connected'}}">{{vm.ready ? '取消准备' : vm.ended ? '准备下一局' : '我准备好了'}}</button><button wx:if="{{vm.hostId === vm.meId}}" class="section" bindtap="start" disabled="{{!vm.canStart || busy || status !== 'connected'}}">{{vm.canStart ? '全员就绪，开始游戏' : '等待六人全部准备'}}</button></view>
+    <view wx:if="{{vm.actionType}}" class="section"><view class="small">点击席位选择目标。{{vm.actionType === 'vote' ? '截止前可修改选择。' : ''}}</view><button class="primary section" bindtap="submit" disabled="{{!selected || busy || status !== 'connected'}}">{{vm.actionText}}</button><button wx:if="{{vm.canAbstain}}" class="section" bindtap="abstain" disabled="{{busy || status !== 'connected'}}">本轮弃票</button><view wx:if="{{vm.myVote}}" class="small section">{{vm.myVote}}</view></view>
+    <button wx:if="{{vm.allowPass}}" class="primary section" bindtap="pass" disabled="{{busy || status !== 'connected'}}">我说完了，结束发言</button>
+    <view wx:if="{{error}}" class="error">{{error}}</view>
+    <view class="section"><button class="link-button" bindtap="toggleRecords">{{recordsOpen ? '收起公开记录' : '查看公开记录'}}</button><view wx:if="{{recordsOpen}}" class="records"><view wx:if="{{!vm.history.length}}" class="small">还没有公开事件。</view><view wx:for="{{vm.history}}" wx:key="id" class="record">{{item.text}}</view></view></view>
+    <button class="link-button" bindtap="toggleHelp">{{helpOpen ? '收起玩法提示' : '查看玩法提示'}}</button>
+    <view wx:if="{{helpOpen}}" class="panel rules">发言可以围绕：怀疑谁、依据是什么、想追问谁。系统不判断谁说真话。\n出局不公开身份；投票截止后公开每个人投给谁。平票最多加投一次。\n白天放逐者在非终局时有遗言，夜晚遇袭者没有。出局后只听不说。\n首夜不袭击；两狼全部出局好人胜，狼人数达到好人数狼人胜。\n遗言最多 15 秒。夜晚目标不一致则不袭击。允许弃票，不能投自己。</view>
+    <button class="link-button section" bindtap="leave">离开房间</button>
+  </block>
+  <view wx:else class="panel section"><view>正在读取房间。如果房间已关闭，可以重新进入。</view><button class="section" bindtap="relogin">返回入口</button></view>
+</view>
